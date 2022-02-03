@@ -34,14 +34,14 @@
         android:id="@+id/button3"
         android:layout_width="218dp"
         android:layout_height="103dp"
+        android:layout_marginTop="140dp"
         android:text="Extracted Text Files"
         android:textColor="#000000"
         app:backgroundTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.231" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button4"
@@ -50,9 +50,24 @@
         android:text="Scan Documents"
         android:textColor="#000000"
         app:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/SavedPhoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintVertical_bias="0.472" />
+
+    <Button
+        android:id="@+id/SavedPhoto"
+        android:layout_width="218dp"
+        android:layout_height="103dp"
+        android:layout_marginBottom="172dp"
+        android:text="Saved photo"
+        android:textColor="#000000"
+        app:backgroundTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

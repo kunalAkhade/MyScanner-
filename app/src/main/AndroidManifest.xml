@@ -15,8 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyScanner">
-        <activity android:name=".ScanRecyclerView"
-            android:theme="@style/Theme.MyScanner2"></activity>
+        <activity android:name=".CollectImage"></activity>
+        <activity
+            android:name=".SearchView"
+            android:theme="@style/Theme.MyScanner2" />
+        <activity
+            android:name=".ScanRecyclerView"
+            android:theme="@style/Theme.MyScanner2" />
         <activity android:name=".Scan2" />
         <activity
             android:name=".Text"

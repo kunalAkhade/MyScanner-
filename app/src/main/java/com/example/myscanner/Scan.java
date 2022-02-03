@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +28,20 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -41,14 +52,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.UUID;
 
 import static android.os.Environment.getExternalStorageDirectory;
 import static android.os.Environment.getStorageDirectory;
+import static java.util.UUID.randomUUID;
 
 public class Scan extends AppCompatActivity{
 ImageView imageView;
-Button extract,scan;
+Button extract,scan,saved;
 String s;
+ int no;
     private static final int PIC_CROP = 1;
     Bitmap selectedBitmap;
 
@@ -59,7 +73,7 @@ String s;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
         imageView=findViewById(R.id.imageView);
-
+        saved=findViewById(R.id.saved);
     scan=findViewById(R.id.scan);
         image_uri=getIntent().getData();
 
@@ -129,6 +143,72 @@ String s;
             }
         });
 
+        saved.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                //ProgressDialog dialog=new ProgressDialog(Scan.this);
+               // dialog.setTitle("File Uploader");
+                //dialog.show();
+
+
+
+                FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference=firebaseDatabase.getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Image");
+
+                UUID uuid= randomUUID();
+                databaseReference.child(uuid.toString()).child("uri").setValue(image_uri.toString());
+
+
+
+
+
+
+
+
+                FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromBitmap(selectedBitmap);
+                FirebaseVision firebaseVision = FirebaseVision.getInstance();
+                FirebaseVisionTextRecognizer firebaseVisionTextRecognizer =firebaseVision.getOnDeviceTextRecognizer();
+                Task<FirebaseVisionText> task= firebaseVisionTextRecognizer.processImage(firebaseVisionImage);
+                task.addOnSuccessListener(firebaseVisionText -> {
+                    s=firebaseVisionText.getText();
+
+                   databaseReference.child(uuid.toString()).child("ExtractedText").setValue(s);
+
+
+
+
+                });
+                task.addOnFailureListener(e -> {
+                    Toast.makeText(Scan.this, "Failed", Toast.LENGTH_SHORT).show();
+                    Log.i("102","failed");
+                });
+
+             /*   databaseReference.putFile(filepath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+
+                        // Toast.makeText(MainActivity.this, "Image uploaded", Toast.LENGTH_SHORT) .show();
+                        databaseReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //You will get donwload URL in uri
+                                Log.d(TAG, "Download URL = "+ uri.toString());
+                                //Adding that URL to Realtime database
+                                mDatabase.child("imageUrl").setValue(uri.toString());
+                            }
+                        });
+                    }
+                }); */
+
+
+                Intent intent=new Intent(Scan.this, HomeActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
 
 
     }

@@ -15,7 +15,7 @@
         android:layout_height="610dp"></ImageView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:orientation="horizontal"
@@ -23,27 +23,43 @@
 
         <Button
             android:id="@+id/extract"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_baseline_text_rotation_none_24"
-            android:text="Extract Text"
+            android:text="Extract "
             android:textColor="#FFFFFF"
             app:backgroundTint="#000000" />
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="0.0001dp"
+            android:layout_width="0.00001dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <Button
             android:id="@+id/scan"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_baseline_document_scanner_24"
             android:text="Scan Image"
+            android:textColor="#FFFEFE"
+            app:backgroundTint="#000000" />
+
+        <TextView
+            android:id="@+id/t"
+            android:layout_width="0.00001dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/saved"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_baseline_save_24"
+            android:text="Save"
             android:textColor="#FFFEFE"
             app:backgroundTint="#000000" />
     </LinearLayout>

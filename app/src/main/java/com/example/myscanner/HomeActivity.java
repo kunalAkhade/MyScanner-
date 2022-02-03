@@ -56,6 +56,7 @@ public class HomeActivity extends AppCompatActivity{
    Button button3;
 
    Button button4;
+   Button button;
     int REQUEST_CODE = 99;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -63,6 +64,7 @@ public class HomeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        button=findViewById(R.id.SavedPhoto);
 
 button3=findViewById(R.id.button3);
 
@@ -72,6 +74,14 @@ button3.setOnClickListener(new View.OnClickListener(){
     @Override
     public void onClick(View view) {
         Intent intent= new Intent( HomeActivity.this, ExtractText.class);
+        startActivity(intent);
+    }
+});
+
+button.setOnClickListener(new View.OnClickListener(){
+    @Override
+    public void onClick(View view) {
+        Intent intent =new Intent(HomeActivity.this,SearchView.class);
         startActivity(intent);
     }
 });
